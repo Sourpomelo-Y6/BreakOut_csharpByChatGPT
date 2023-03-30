@@ -2,19 +2,42 @@
 {
     public class Paddle
     {
-        private float width;
-        private float height;
-        public float x;
-        public float y;
+        public double X { get; private set; }
 
-        public void moveRight()
+        public double Y { get; private set; }
+
+        public double Width { get; private set; }
+
+        public double Height { get; private set; }
+
+        private readonly double speed = 10;
+
+        public Paddle(double x, double y)
         {
-            x += 10f;
+            X = x;
+            Y = y;
+            Width = 80;
+            Height = 15;
         }
 
-        public void moveLeft()
+        public void MoveLeft()
         {
-            x -= 10f;
+            X -= speed;
+
+            if (X - Width / 2 < 0)
+            {
+                X = Width / 2;
+            }
+        }
+
+        public void MoveRight()
+        {
+            X += speed;
+
+            if (X + Width / 2 > 500)
+            {
+                X = 500 - Width / 2;
+            }
         }
     }
 

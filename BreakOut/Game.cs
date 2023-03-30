@@ -1,4 +1,7 @@
-﻿namespace BreakOut
+﻿using System;
+using System.Timers;
+
+namespace BreakOut
 {
     public class Game
     {
@@ -144,7 +147,7 @@
                 {
                     block.Break();
                     BrickBroken?.Invoke(this, new BlockEventArgs(block));
-                    Score += 10
+                    Score += 10;
                     if (IsGameCleared())
                     {
                         GameOver?.Invoke(this, EventArgs.Empty);
@@ -153,103 +156,104 @@
 
                     BallMoved?.Invoke(this, new BallEventArgs(Ball));
                 }
+            } 
+        }
+
+        private bool IsBallCollidedWithPaddle(Ball ball, Paddle paddle)
+        {
+            double deltaX = Math.Abs(ball.X - paddle.X);
+            double deltaY = Math.Abs(ball.Y - paddle.Y);
+
+            if (deltaX > (paddle.Width / 2 + ball.Radius))
+            {
+                return false;
             }
 
-            private bool IsBallCollidedWithPaddle(Ball ball, Paddle paddle)
+            if (deltaY > (paddle.Height / 2 + ball.Radius))
             {
-                double deltaX = Math.Abs(ball.X - paddle.X);
-                double deltaY = Math.Abs(ball.Y - paddle.Y);
-
-                if (deltaX > (paddle.Width / 2 + ball.Radius))
-                {
-                    return false;
-                }
-
-                if (deltaY > (paddle.Height / 2 + ball.Radius))
-                {
-                    return false;
-                }
-
-                if (deltaX <= (paddle.Width / 2))
-                {
-                    return true;
-                }
-
-                if (deltaY <= (paddle.Height / 2))
-                {
-                    return true;
-                }
-
-                double dx = deltaX - paddle.Width / 2;
-                double dy = deltaY - paddle.Height / 2;
-                return (dx * dx + dy * dy <= (ball.Radius * ball.Radius));
+                return false;
             }
 
-            private bool IsBallCollidedWithBlock(Ball ball, Block block)
+            if (deltaX <= (paddle.Width / 2))
             {
-                double deltaX = Math.Abs(ball.X - block.X);
-                double deltaY = Math.Abs(ball.Y - block.Y);
-
-                if (deltaX > (block.Width / 2 + ball.Radius))
-                {
-                    return false;
-                }
-
-                if (deltaY > (block.Height / 2 + ball.Radius))
-                {
-                    return false;
-                }
-
-                if (deltaX <= (block.Width / 2))
-                {
-                    return true;
-                }
-
-                if (deltaY <= (block.Height / 2))
-                {
-                    return true;
-                }
-
-                double dx = deltaX - block.Width / 2;
-                double dy = deltaY - block.Height / 2;
-                return (dx * dx + dy * dy <= (ball.Radius * ball.Radius));
-            }
-
-            private bool IsGameCleared()
-            {
-                foreach (var block in Blocks)
-                {
-                    if (!block.IsBroken)
-                    {
-                        return false;
-                    }
-                }
-
                 return true;
             }
 
-            private void OnBallMoved(object sender, BallEventArgs e)
+            if (deltaY <= (paddle.Height / 2))
             {
-                BallMoved?.Invoke(this, e);
+                return true;
             }
 
-            private void OnPaddleMoved(object sender, PaddleEventArgs e)
+            double dx = deltaX - paddle.Width / 2;
+            double dy = deltaY - paddle.Height / 2;
+            return (dx * dx + dy * dy <= (ball.Radius * ball.Radius));
+        }
+
+        private bool IsBallCollidedWithBlock(Ball ball, Block block)
+        {
+            double deltaX = Math.Abs(ball.X - block.X);
+            double deltaY = Math.Abs(ball.Y - block.Y);
+
+            if (deltaX > (block.Width / 2 + ball.Radius))
             {
-                PaddleMoved?.Invoke(this, e);
+                return false;
             }
 
-            private void OnBrickBroken(object sender, BlockEventArgs e)
+            if (deltaY > (block.Height / 2 + ball.Radius))
             {
-                Score += 10;
-                BrickBroken?.Invoke(this, e);
+                return false;
             }
 
-            private void OnGameOver(object sender, EventArgs e)
+            if (deltaX <= (block.Width / 2))
             {
-                isStarted = false;
-                isPaused = false;
-                GameOver?.Invoke(this, e);
+                return true;
             }
+
+            if (deltaY <= (block.Height / 2))
+            {
+                return true;
+            }
+
+            double dx = deltaX - block.Width / 2;
+            double dy = deltaY - block.Height / 2;
+            return (dx * dx + dy * dy <= (ball.Radius * ball.Radius));
+        }
+
+        private bool IsGameCleared()
+        {
+            foreach (var block in Blocks)
+            {
+                if (!block.IsBroken)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private void OnBallMoved(object sender, BallEventArgs e)
+        {
+            BallMoved?.Invoke(this, e);
+        }
+
+        private void OnPaddleMoved(object sender, PaddleEventArgs e)
+        {
+            PaddleMoved?.Invoke(this, e);
+        }
+
+        private void OnBrickBroken(object sender, BlockEventArgs e)
+        {
+            Score += 10;
+            BrickBroken?.Invoke(this, e);
+        }
+
+        private void OnGameOver(object sender, EventArgs e)
+        {
+            isStarted = false;
+            isPaused = false;
+            GameOver?.Invoke(this, e);
+        }
 
         public event EventHandler<BallEventArgs> BallMoved;
 

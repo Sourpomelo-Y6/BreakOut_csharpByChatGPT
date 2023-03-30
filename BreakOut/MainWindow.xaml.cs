@@ -146,7 +146,7 @@ namespace BreakOut
             game.Reset();
             foreach (var child in canvas.Children)
             {
-                canvas.Children.Remove(child);
+                canvas.Children.Remove((UIElement)child);
             }
             Window_Loaded(sender, e);
             startButton.Visibility = Visibility.Visible;
