@@ -2,15 +2,28 @@
 {
     public class Block
     {
-        private float width;
-        private float height;
-        public float x;
-        public float y;
-        public bool isBroken;
+        public double X { get; private set; }
 
-        public void breakBlock()
+        public double Y { get; private set; }
+
+        public double Width { get; private set; }
+
+        public double Height { get; private set; }
+
+        public bool IsBroken { get; set; }
+
+        public Block(double x, double y)
         {
-            isBroken = true;
+            X = x;
+            Y = y;
+            Width = 50;
+            Height = 15;
+            IsBroken = false;
+        }
+
+        public void Break()
+        {
+            IsBroken = true;
         }
     }
 
