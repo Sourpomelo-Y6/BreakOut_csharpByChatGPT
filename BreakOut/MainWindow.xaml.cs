@@ -39,7 +39,7 @@ namespace BreakOut
             // ゲームオブジェクトを作成
             game = new Game(canvas.ActualWidth, canvas.ActualHeight);
             game.BallMoved += game_BallMoved;
-            game.BrickBroken += game_BrickBroken;
+            game.BlockBroken += game_BlockBroken;
             game.PaddleMoved += game_PaddleMoved;
             game.GameOver += game_GameOver;
 
@@ -220,7 +220,7 @@ namespace BreakOut
             resetButton_Click(sender, null);
         }
 
-        private void game_BrickBroken(object sender, BlockEventArgs e)
+        private void game_BlockBroken(object sender, BlockEventArgs e)
         {
             RemoveBlock(e.Block);
         }

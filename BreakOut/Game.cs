@@ -39,7 +39,7 @@ namespace BreakOut
 
             BallMoved += OnBallMoved;
             PaddleMoved += OnPaddleMoved;
-            BrickBroken += OnBrickBroken;
+            BlockBroken += OnBlockBroken;
             GameOver += OnGameOver;
         }
 
@@ -166,7 +166,7 @@ namespace BreakOut
                     }
 
                     block.Break();
-                    BrickBroken?.Invoke(this, new BlockEventArgs(block));
+                    BlockBroken?.Invoke(this, new BlockEventArgs(block));
                     Score += 10;
                     if (IsGameCleared())
                     {
@@ -313,7 +313,7 @@ namespace BreakOut
             //PaddleMoved?.Invoke(this, e);
         }
 
-        private void OnBrickBroken(object sender, BlockEventArgs e)
+        private void OnBlockBroken(object sender, BlockEventArgs e)
         {
             Score += 10;
             //BrickBroken?.Invoke(this, e);
@@ -333,7 +333,7 @@ namespace BreakOut
 
         public event EventHandler<PaddleEventArgs> PaddleMoved;
 
-        public event EventHandler<BlockEventArgs> BrickBroken;
+        public event EventHandler<BlockEventArgs> BlockBroken;
 
         public event EventHandler GameOver;
     }
