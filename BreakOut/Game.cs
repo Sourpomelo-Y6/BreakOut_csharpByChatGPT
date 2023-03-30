@@ -36,11 +36,6 @@ namespace BreakOut
                 var y = (i / 8) * 20 + 30;
                 Blocks[i] = new Block(x, y);
             }
-
-            BallMoved += OnBallMoved;
-            PaddleMoved += OnPaddleMoved;
-            BrickBroken += OnBrickBroken;
-            GameOver += OnGameOver;
         }
 
         public void Start()
@@ -56,7 +51,7 @@ namespace BreakOut
             Ball.Reset();
             Score = 0;
 
-            Timer timer = new Timer(16);
+            Timer timer = new Timer(160);
             timer.Elapsed += OnTimerElapsed;
             timer.Start();
         }
@@ -146,17 +141,17 @@ namespace BreakOut
                 if (!block.IsBroken && IsBallCollidedWithBlock(Ball, block))
                 {
                     block.Break();
-                    BrickBroken?.Invoke(this, new BlockEventArgs(block));
+                    //BrickBroken?.Invoke(this, new BlockEventArgs(block));
                     Score += 10;
                     if (IsGameCleared())
                     {
                         GameOver?.Invoke(this, EventArgs.Empty);
                         return;
                     }
-
-                    BallMoved?.Invoke(this, new BallEventArgs(Ball));
                 }
-            } 
+            }
+
+            BallMoved?.Invoke(this, new BallEventArgs(Ball));
         }
 
         private bool IsBallCollidedWithPaddle(Ball ball, Paddle paddle)

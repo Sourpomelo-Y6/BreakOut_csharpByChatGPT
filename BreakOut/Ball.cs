@@ -12,7 +12,7 @@
 
         public double Radius { get; private set; }
 
-        private readonly double initialSpeed = 5;
+        private readonly double initialSpeed = -5;
 
         private readonly double maxSpeed = 10;
 

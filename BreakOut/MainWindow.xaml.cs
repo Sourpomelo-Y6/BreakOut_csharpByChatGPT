@@ -31,6 +31,10 @@ namespace BreakOut
         {
             // ゲームオブジェクトを作成
             game = new Game(canvas.ActualWidth, canvas.ActualHeight);
+            game.BallMoved += game_BallMoved;
+            game.BrickBroken += game_BrickBroken;
+            game.PaddleMoved += game_PaddleMoved;
+            game.GameOver += game_GameOver;
 
             // パドルを追加
             AddPaddle(game.Paddle);
@@ -97,41 +101,68 @@ namespace BreakOut
 
         private void UpdatePaddle(Paddle paddle)
         {
-            foreach (var child in canvas.Children)
+            // 別スレッドからのアクセス
+            Task.Run(() =>
             {
-                if (child is Rectangle rect && rect.Fill == Brushes.Black)
+                // UIスレッドでの処理をDispatcherにキューイングする
+                Dispatcher.Invoke(() =>
                 {
-                    Canvas.SetLeft(rect, paddle.X - paddle.Width / 2);
-                    Canvas.SetTop(rect, paddle.Y - paddle.Height / 2);
-                    break;
-                }
-            }
+                    // UI要素にアクセスする処理を書く
+                    foreach (var child in canvas.Children)
+                    {
+                        if (child is Rectangle rect && rect.Fill == Brushes.Black)
+                        {
+                            Canvas.SetLeft(rect, paddle.X - paddle.Width / 2);
+                            Canvas.SetTop(rect, paddle.Y - paddle.Height / 2);
+                            break;
+                        }
+                    }                
+                });
+            });
         }
         private void UpdateBall(Ball ball)
         {
-            foreach (var child in canvas.Children)
+            // 別スレッドからのアクセス
+            Task.Run(() =>
             {
-                if (child is Ellipse ellipse && ellipse.Fill == Brushes.Blue)
+                // UIスレッドでの処理をDispatcherにキューイングする
+                Dispatcher.Invoke(() =>
                 {
-                    Canvas.SetLeft(ellipse, ball.X - ball.Radius);
-                    Canvas.SetTop(ellipse, ball.Y - ball.Radius);
-                    break;
-                }
-            }
+                    // UI要素にアクセスする処理を書く
+                    foreach (var child in canvas.Children)
+                    {
+                        if (child is Ellipse ellipse && ellipse.Fill == Brushes.Blue)
+                        {
+                            Canvas.SetLeft(ellipse, ball.X - ball.Radius);
+                            Canvas.SetTop(ellipse, ball.Y - ball.Radius);
+                            break;
+                        }
+                    }
+                });
+            });
         }
 
         private void RemoveBlock(Block block)
         {
-            foreach (var child in canvas.Children)
+            // 別スレッドからのアクセス
+            Task.Run(() =>
             {
-                if (child is Rectangle rect && rect.Fill == Brushes.Red &&
-                    Canvas.GetLeft(rect) == block.X - block.Width / 2 &&
-                    Canvas.GetTop(rect) == block.Y - block.Height / 2)
+                // UIスレッドでの処理をDispatcherにキューイングする
+                Dispatcher.Invoke(() =>
                 {
-                    canvas.Children.Remove(rect);
-                    break;
-                }
-            }
+                    // UI要素にアクセスする処理を書く
+                    foreach (var child in canvas.Children)
+                    {
+                        if (child is Rectangle rect && rect.Fill == Brushes.Red &&
+                            Canvas.GetLeft(rect) == block.X - block.Width / 2 &&
+                            Canvas.GetTop(rect) == block.Y - block.Height / 2)
+                        {
+                            canvas.Children.Remove(rect);
+                            break;
+                        }
+                    }
+                });
+            });
         }
 
         private void startButton_Click(object sender, RoutedEventArgs e)
@@ -143,14 +174,23 @@ namespace BreakOut
 
         private void resetButton_Click(object sender, RoutedEventArgs e)
         {
-            game.Reset();
-            foreach (var child in canvas.Children)
+            // 別スレッドからのアクセス
+            Task.Run(() =>
             {
-                canvas.Children.Remove((UIElement)child);
-            }
-            Window_Loaded(sender, e);
-            startButton.Visibility = Visibility.Visible;
-            resetButton.Visibility = Visibility.Collapsed;
+                // UIスレッドでの処理をDispatcherにキューイングする
+                Dispatcher.Invoke(() =>
+                {
+                    // UI要素にアクセスする処理を書く
+                    game.Reset();
+                    //foreach (var child in canvas.Children)
+                    //{
+                    //    canvas.Children.Remove((UIElement)child);
+                    //}
+                    //Window_Loaded(sender, e);
+                    startButton.Visibility = Visibility.Visible;
+                    resetButton.Visibility = Visibility.Collapsed;
+                });
+            });
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)

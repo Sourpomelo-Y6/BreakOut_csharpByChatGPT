@@ -11,7 +11,7 @@
                 Background="White"
                 Width="500"
                 Height="500"
-                Margin="50" />
+                Margin="50" KeyDown="Window_KeyDown" />
         <Button Name="startButton"
                 Content="Start"
                 Click="startButton_Click"
