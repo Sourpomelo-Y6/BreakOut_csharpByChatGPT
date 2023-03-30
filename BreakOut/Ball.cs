@@ -2,26 +2,61 @@
 {
     public class Ball
     {
-        public float speedX;
-        public float speedY;
-        public float x;
-        public float y;
+        public double X { get; private set; }
 
-        public void move()
+        public double Y { get; private set; }
+
+        public double SpeedX { get; private set; }
+
+        public double SpeedY { get; private set; }
+
+        public double Radius { get; private set; }
+
+        private readonly double initialSpeed = 5;
+
+        private readonly double maxSpeed = 10;
+
+        public Ball(double x, double y)
         {
-            x += speedX;
-            y += speedY;
+            X = x;
+            Y = y;
+            SpeedX = initialSpeed;
+            SpeedY = initialSpeed;
+            Radius = 10;
         }
 
-        public void reverseX()
+        public void Reset()
         {
-            speedX *= -1;
+            X = 250;
+            Y = 250;
+            SpeedX = initialSpeed;
+            SpeedY = initialSpeed;
         }
 
-        public void reverseY()
+        public void Move()
         {
-            speedY *= -1;
+            X += SpeedX;
+            Y += SpeedY;
+
+            if (SpeedX > maxSpeed)
+            {
+                SpeedX = maxSpeed;
+            }
+
+            if (SpeedY > maxSpeed)
+            {
+                SpeedY = maxSpeed;
+            }
+        }
+
+        public void ReverseX()
+        {
+            SpeedX = -SpeedX;
+        }
+
+        public void ReverseY()
+        {
+            SpeedY = -SpeedY;
         }
     }
-
 }
