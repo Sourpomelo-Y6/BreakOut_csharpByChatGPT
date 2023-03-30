@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -29,6 +30,12 @@ namespace BreakOut
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            GameReset();
+        }
+
+        private void GameReset()
+        {
+            canvas.Children.Clear();
             // ゲームオブジェクトを作成
             game = new Game(canvas.ActualWidth, canvas.ActualHeight);
             game.BallMoved += game_BallMoved;
@@ -187,6 +194,7 @@ namespace BreakOut
                     //    canvas.Children.Remove((UIElement)child);
                     //}
                     //Window_Loaded(sender, e);
+                    GameReset();
                     startButton.Visibility = Visibility.Visible;
                     resetButton.Visibility = Visibility.Collapsed;
                 });

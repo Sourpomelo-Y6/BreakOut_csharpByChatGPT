@@ -12,7 +12,7 @@ namespace BreakOut
         public Paddle Paddle { get; private set; }
 
         public Block[] Blocks { get; private set; }
-
+        
         private bool isStarted = false;
 
         private bool isPaused = false;
@@ -36,6 +36,11 @@ namespace BreakOut
                 var y = (i / 8) * 20 + 30;
                 Blocks[i] = new Block(x, y);
             }
+
+            BallMoved += OnBallMoved;
+            PaddleMoved += OnPaddleMoved;
+            BrickBroken += OnBrickBroken;
+            GameOver += OnGameOver;
         }
 
         public void Start()
@@ -106,7 +111,7 @@ namespace BreakOut
 
         private void OnTimerElapsed(object sender, ElapsedEventArgs e)
         {
-            if (isPaused)
+            if (!isStarted || isPaused)
             {
                 return;
             }
@@ -138,8 +143,28 @@ namespace BreakOut
             {
                 var block = Blocks[i];
 
-                if (!block.IsBroken && IsBallCollidedWithBlock(Ball, block))
+
+                if (!block.IsBroken && IsBallCollidedWithBlock(Ball,block))
                 {
+                    switch (CheckBlockCollision(Ball, block))
+                    {
+                        case BlockCollisionType.Top:
+                            Ball.ReverseY();
+                            break;
+                        case BlockCollisionType.Bottom:
+                            Ball.ReverseY();
+                            break;
+                        case BlockCollisionType.Left:
+                            Ball.ReverseX();
+                            break;
+                        case BlockCollisionType.Right:
+                            Ball.ReverseX();
+                            break;
+                        default:
+                            //error!
+                            break;
+                    }
+
                     block.Break();
                     BrickBroken?.Invoke(this, new BlockEventArgs(block));
                     Score += 10;
@@ -214,6 +239,57 @@ namespace BreakOut
             return (dx * dx + dy * dy <= (ball.Radius * ball.Radius));
         }
 
+
+        public enum BlockCollisionType
+        {
+            None,
+            Top,
+            Bottom,
+            Left,
+            Right
+        }
+
+        public static BlockCollisionType CheckBlockCollision(Ball ball, Block block)
+        {
+            double ballBottom = ball.Y + ball.Radius;
+            double ballTop = ball.Y - ball.Radius;
+            double ballLeft = ball.X - ball.Radius;
+            double ballRight = ball.X + ball.Radius;
+
+            double blockBottom = block.Y + block.Height / 2;
+            double blockTop = block.Y - block.Height / 2;
+            double blockLeft = block.X - block.Width / 2;
+            double blockRight = block.X + block.Width / 2;
+
+            if (ballBottom >= blockTop && ballTop <= blockBottom && ballRight >= blockLeft && ballLeft <= blockRight)
+            {
+                // Ball is colliding with block
+                double overlapBottom = blockBottom - ballTop;
+                double overlapTop = ballBottom - blockTop;
+                double overlapLeft = ballRight - blockLeft;
+                double overlapRight = blockRight - ballLeft;
+
+                if (overlapBottom <= overlapTop && overlapBottom <= overlapLeft && overlapBottom <= overlapRight)
+                {
+                    return BlockCollisionType.Top;
+                }
+                else if (overlapTop <= overlapBottom && overlapTop <= overlapLeft && overlapTop <= overlapRight)
+                {
+                    return BlockCollisionType.Bottom;
+                }
+                else if (overlapLeft <= overlapBottom && overlapLeft <= overlapTop && overlapLeft <= overlapRight)
+                {
+                    return BlockCollisionType.Left;
+                }
+                else if (overlapRight <= overlapBottom && overlapRight <= overlapTop && overlapRight <= overlapLeft)
+                {
+                    return BlockCollisionType.Right;
+                }
+            }
+
+            return BlockCollisionType.None;
+        }
+
         private bool IsGameCleared()
         {
             foreach (var block in Blocks)
@@ -229,25 +305,28 @@ namespace BreakOut
 
         private void OnBallMoved(object sender, BallEventArgs e)
         {
-            BallMoved?.Invoke(this, e);
+            //BallMoved?.Invoke(this, e);
         }
 
         private void OnPaddleMoved(object sender, PaddleEventArgs e)
         {
-            PaddleMoved?.Invoke(this, e);
+            //PaddleMoved?.Invoke(this, e);
         }
 
         private void OnBrickBroken(object sender, BlockEventArgs e)
         {
             Score += 10;
-            BrickBroken?.Invoke(this, e);
+            //BrickBroken?.Invoke(this, e);
         }
 
         private void OnGameOver(object sender, EventArgs e)
         {
-            isStarted = false;
-            isPaused = false;
-            GameOver?.Invoke(this, e);
+            if (isStarted)
+            {
+                isStarted = false;
+                isPaused = false;
+                //GameOver?.Invoke(this, e);
+            }
         }
 
         public event EventHandler<BallEventArgs> BallMoved;
