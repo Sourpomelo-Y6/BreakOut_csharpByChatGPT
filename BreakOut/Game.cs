@@ -51,7 +51,7 @@ namespace BreakOut
             Ball.Reset();
             Score = 0;
 
-            Timer timer = new Timer(160);
+            Timer timer = new Timer(16);
             timer.Elapsed += OnTimerElapsed;
             timer.Start();
         }
@@ -141,7 +141,7 @@ namespace BreakOut
                 if (!block.IsBroken && IsBallCollidedWithBlock(Ball, block))
                 {
                     block.Break();
-                    //BrickBroken?.Invoke(this, new BlockEventArgs(block));
+                    BrickBroken?.Invoke(this, new BlockEventArgs(block));
                     Score += 10;
                     if (IsGameCleared())
                     {
