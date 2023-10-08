@@ -1,20 +1,17 @@
-﻿namespace BreakOut
+﻿namespace BreakOut.Model.Shapes
 {
-    public class Ball
+    public class Ball : Shape
     {
-        public double X { get; private set; }
-
-        public double Y { get; private set; }
 
         public double SpeedX { get; private set; }
 
         public double SpeedY { get; private set; }
 
-        public double Radius { get; private set; }
 
         private readonly double initialSpeed = -5;
 
         private readonly double maxSpeed = 10;
+        internal double Radius;
 
         public Ball(double x, double y)
         {
@@ -23,6 +20,8 @@
             SpeedX = initialSpeed;
             SpeedY = initialSpeed;
             Radius = 10;
+            Width = Radius;
+            Height = Radius;
         }
 
         public void Reset()

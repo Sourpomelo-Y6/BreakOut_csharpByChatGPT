@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>BreakOut.App</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -55,27 +58,35 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Ball.cs" />
-    <Compile Include="BallEventArgs.cs" />
-    <Compile Include="Block.cs" />
-    <Compile Include="BlockEventArgs.cs" />
-    <Compile Include="Game.cs" />
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Model\Shapes\Ball.cs" />
+    <Compile Include="Model\Shapes\Block.cs" />
+    <Compile Include="Model\Game.cs" />
+    <Compile Include="Model\Shapes\Shape.cs" />
+    <Compile Include="ViewModel\BallViewModel.cs" />
+    <Compile Include="ViewModel\BlockViewModel.cs" />
+    <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\ObservableObject.cs" />
+    <Compile Include="ViewModel\PaddleViewModel.cs" />
+    <Compile Include="ViewModel\RelayCommand.cs" />
+    <Compile Include="View\BallControl.xaml.cs">
+      <DependentUpon>BallControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\BlockControl.xaml.cs">
+      <DependentUpon>BlockControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="View\PaddleControl.xaml.cs">
+      <DependentUpon>PaddleControl.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Paddle.cs" />
-    <Compile Include="PaddleEventArgs.cs" />
+    <Compile Include="Model\Shapes\Paddle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -100,6 +111,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="View\BallControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\BlockControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PaddleControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

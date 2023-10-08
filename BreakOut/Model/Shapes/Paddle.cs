@@ -1,14 +1,7 @@
-﻿namespace BreakOut
+﻿namespace BreakOut.Model.Shapes
 {
-    public class Paddle
+    public class Paddle : Shape
     {
-        public double X { get; private set; }
-
-        public double Y { get; private set; }
-
-        public double Width { get; private set; }
-
-        public double Height { get; private set; }
 
         private readonly double speed = 10;
 

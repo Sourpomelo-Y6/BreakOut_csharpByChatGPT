@@ -1,7 +1,8 @@
-﻿using System;
+﻿using BreakOut.Model.Shapes;
+using System;
 using System.Timers;
 
-namespace BreakOut
+namespace BreakOut.Model
 {
     public class Game
     {
@@ -21,10 +22,10 @@ namespace BreakOut
 
         private readonly double canvasHeight;
 
-        public Game(double canvasWidth, double canvasHeight)
+        public Game()
         {
-            this.canvasWidth = canvasWidth;
-            this.canvasHeight = canvasHeight;
+            this.canvasWidth = 640;//canvasWidth;
+            this.canvasHeight = 640;//canvasHeight;
 
             Ball = new Ball(canvasWidth / 2, canvasHeight / 2);
             Paddle = new Paddle(canvasWidth / 2, canvasHeight - 50);
@@ -37,10 +38,10 @@ namespace BreakOut
                 Blocks[i] = new Block(x, y);
             }
 
-            BallMoved += OnBallMoved;
-            PaddleMoved += OnPaddleMoved;
-            BlockBroken += OnBlockBroken;
-            GameOver += OnGameOver;
+            //BallMoved += OnBallMoved;
+            //PaddleMoved += OnPaddleMoved;
+            //BlockBroken += OnBlockBroken;
+            //GameOver += OnGameOver;
         }
 
         public void Start()
@@ -83,8 +84,8 @@ namespace BreakOut
                 block.IsBroken = false;
             }
 
-            BallMoved?.Invoke(this, new BallEventArgs(Ball));
-            PaddleMoved?.Invoke(this, new PaddleEventArgs(Paddle));
+            //BallMoved?.Invoke(this, new BallEventArgs(Ball));
+            //PaddleMoved?.Invoke(this, new PaddleEventArgs(Paddle));
         }
 
         public void MovePaddleLeft()
@@ -95,7 +96,7 @@ namespace BreakOut
             }
 
             Paddle.MoveLeft();
-            PaddleMoved?.Invoke(this, new PaddleEventArgs(Paddle));
+            //PaddleMoved?.Invoke(this, new PaddleEventArgs(Paddle));
         }
 
         public void MovePaddleRight()
@@ -106,7 +107,7 @@ namespace BreakOut
             }
 
             Paddle.MoveRight();
-            PaddleMoved?.Invoke(this, new PaddleEventArgs(Paddle));
+            //PaddleMoved?.Invoke(this, new PaddleEventArgs(Paddle));
         }
 
         private void OnTimerElapsed(object sender, ElapsedEventArgs e)
@@ -130,7 +131,7 @@ namespace BreakOut
 
             if (Ball.Y + Ball.Radius >= canvasHeight)
             {
-                GameOver?.Invoke(this, EventArgs.Empty);
+                //GameOver?.Invoke(this, EventArgs.Empty);
                 return;
             }
 
@@ -166,17 +167,17 @@ namespace BreakOut
                     }
 
                     block.Break();
-                    BlockBroken?.Invoke(this, new BlockEventArgs(block));
+                    //BlockBroken?.Invoke(this, new BlockEventArgs(block));
                     Score += 10;
                     if (IsGameCleared())
                     {
-                        GameOver?.Invoke(this, EventArgs.Empty);
+                        //GameOver?.Invoke(this, EventArgs.Empty);
                         return;
                     }
                 }
             }
 
-            BallMoved?.Invoke(this, new BallEventArgs(Ball));
+            //BallMoved?.Invoke(this, new BallEventArgs(Ball));
         }
 
         private bool IsBallCollidedWithPaddle(Ball ball, Paddle paddle)
@@ -303,21 +304,21 @@ namespace BreakOut
             return true;
         }
 
-        private void OnBallMoved(object sender, BallEventArgs e)
-        {
-            //BallMoved?.Invoke(this, e);
-        }
+        //private void OnBallMoved(object sender, BallEventArgs e)
+        //{
+        //    //BallMoved?.Invoke(this, e);
+        //}
 
-        private void OnPaddleMoved(object sender, PaddleEventArgs e)
-        {
-            //PaddleMoved?.Invoke(this, e);
-        }
+        //private void OnPaddleMoved(object sender, PaddleEventArgs e)
+        //{
+        //    //PaddleMoved?.Invoke(this, e);
+        //}
 
-        private void OnBlockBroken(object sender, BlockEventArgs e)
-        {
-            Score += 10;
-            //BrickBroken?.Invoke(this, e);
-        }
+        //private void OnBlockBroken(object sender, BlockEventArgs e)
+        //{
+        //    Score += 10;
+        //    //BrickBroken?.Invoke(this, e);
+        //}
 
         private void OnGameOver(object sender, EventArgs e)
         {
@@ -329,13 +330,13 @@ namespace BreakOut
             }
         }
 
-        public event EventHandler<BallEventArgs> BallMoved;
+        //public event EventHandler<BallEventArgs> BallMoved;
 
-        public event EventHandler<PaddleEventArgs> PaddleMoved;
+        //public event EventHandler<PaddleEventArgs> PaddleMoved;
 
-        public event EventHandler<BlockEventArgs> BlockBroken;
+        //public event EventHandler<BlockEventArgs> BlockBroken;
 
-        public event EventHandler GameOver;
+        //public event EventHandler GameOver;
     }
 }
 

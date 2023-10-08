@@ -1,15 +1,7 @@
-﻿namespace BreakOut
+﻿namespace BreakOut.Model.Shapes
 {
-    public class Block
+    public class Block : Shape
     {
-        public double X { get; private set; }
-
-        public double Y { get; private set; }
-
-        public double Width { get; private set; }
-
-        public double Height { get; private set; }
-
         public bool IsBroken { get; set; }
 
         public Block(double x, double y)
