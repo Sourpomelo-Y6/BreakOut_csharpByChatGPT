@@ -23,5 +23,10 @@ namespace BreakOut.View
         {
             InitializeComponent();
         }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            
+        }
     }
 }

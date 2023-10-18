@@ -69,15 +69,23 @@ namespace BreakOut.ViewModel
         private void OnTimerElapsed(object sender, ElapsedEventArgs e)
         {
             game.OnTimerElapsed();
+            //OnPropertyChanged("Shapes");
             App.Current.Dispatcher.Invoke(() =>
             {
-                Shapes.Clear();
-                Shapes.Add(new BallViewModel(game.Ball));
-                for (int i = 0; i < game.Blocks.Length; i++)
+                try
                 {
-                    Shapes.Add(new BlockViewModel(game.Blocks[i]));
+                    Shapes.Clear();
+                    Shapes.Add(new BallViewModel(game.Ball));
+                    for (int i = 0; i < game.Blocks.Length; i++)
+                    {
+                        Shapes.Add(new BlockViewModel(game.Blocks[i]));
+                    }
+                    Shapes.Add(new PaddleViewModel(game.Paddle));
                 }
-                Shapes.Add(new PaddleViewModel(game.Paddle));
+                catch 
+                { 
+                
+                }
             });
 
         }

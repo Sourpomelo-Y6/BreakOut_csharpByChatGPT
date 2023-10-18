@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:BreakOut.View"
         xmlns:vm="clr-namespace:BreakOut.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="640" Width="640">
+        Title="MainWindow" Height="640" Width="640"  Closed="Window_Closed">
     <Window.DataContext>
         <vm:MainViewModel/>
     </Window.DataContext>
