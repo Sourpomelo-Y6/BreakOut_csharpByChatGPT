@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BreakOut.Model.Shapes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,13 +17,24 @@ namespace BreakOut.ViewModel
             Top = 20;
         }
 
+        private Paddle paddle;
+
+        public PaddleViewModel(Paddle paddle)
+        {
+            this.paddle = paddle;
+        }
+
         private double left;
         public double Left
         {
-            get { return left; }
+            get { return (paddle != null) ? paddle.X : left; }
             set
             {
                 left = value;
+                if (paddle != null)
+                {
+                    paddle.X = value;
+                }
                 OnPropertyChanged("Left");
             }
         }
@@ -30,37 +42,49 @@ namespace BreakOut.ViewModel
         private double top;
         public double Top
         {
-            get { return top; }
+            get { return (paddle != null) ? paddle.Y : top; }
             set
             {
                 top = value;
+                if (paddle != null)
+                {
+                    paddle.Y = value;
+                }
                 OnPropertyChanged("Top");
             }
         }
 
         private double width;
-        public double Width 
+        public double Width
         {
-            get { return width; }
+            get { return (paddle != null) ? paddle.Width : width; }
             set
             {
                 width = value;
+                if (paddle != null)
+                {
+                    paddle.Width = value;
+                }
                 OnPropertyChanged("Width");
             }
         }
 
 
         private double height;
-        public double Height 
+        public double Height
         {
-            get { return height; }
+            get { return (paddle != null) ? paddle.Height : height; }
             set
             {
                 height = value;
+                if (paddle != null)
+                {
+                    paddle.Height = value;
+                }
                 OnPropertyChanged("Height");
             }
         }
 
-
+        
     }
 }

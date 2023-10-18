@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BreakOut.Model.Shapes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,19 +11,31 @@ namespace BreakOut.ViewModel
     {
         public BlockViewModel()
         {
+            this.block = null;
             Width = 100;
             Height = 50;
             Left = 200;
             Top = 200;
         }
 
+        private Block block;
+
+        public BlockViewModel(Block block)
+        {
+            this.block = block;
+        }
+
         private double left;
         public double Left
         {
-            get { return left; }
+            get { return (block != null) ? block.X : left; }
             set
             {
                 left = value;
+                if (block != null)
+                {
+                    block.X = value;
+                }
                 OnPropertyChanged("Left");
             }
         }
@@ -30,10 +43,14 @@ namespace BreakOut.ViewModel
         private double top;
         public double Top
         {
-            get { return top; }
+            get { return (block != null) ? block.Y : top; }
             set
             {
                 top = value;
+                if (block != null)
+                {
+                    block.Y = value;
+                }
                 OnPropertyChanged("Top");
             }
         }
@@ -41,10 +58,14 @@ namespace BreakOut.ViewModel
         private double width;
         public double Width
         {
-            get { return width; }
+            get { return (block != null) ? block.Width : width; }
             set
             {
                 width = value;
+                if (block != null)
+                {
+                    block.Width = value;
+                }
                 OnPropertyChanged("Width");
             }
         }
@@ -53,10 +74,14 @@ namespace BreakOut.ViewModel
         private double height;
         public double Height
         {
-            get { return height; }
+            get { return (block != null) ? block.Height : height; }
             set
             {
                 height = value;
+                if (block != null)
+                {
+                    block.Height = value;
+                }
                 OnPropertyChanged("Height");
             }
         }

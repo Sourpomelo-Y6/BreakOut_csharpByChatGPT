@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BreakOut.Model.Shapes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,21 +9,34 @@ namespace BreakOut.ViewModel
 {
     class BallViewModel : ObservableObject
     {
+
+        private Ball ball;
+
         public BallViewModel()
         {
+            this.ball = null;
             Width = 50;
             Height = 50;
             Left = 100;
             Top = 100;
         }
 
+        public BallViewModel(Ball ball)
+        {
+            this.ball = ball;
+        }
+
         private double left;
         public double Left
         {
-            get { return left; }
+            get { return (ball != null) ? ball.X : left; }
             set
             {
                 left = value;
+                if (ball != null) 
+                {
+                    ball.X = value;
+                }
                 OnPropertyChanged("Left");
             }
         }
@@ -30,10 +44,14 @@ namespace BreakOut.ViewModel
         private double top;
         public double Top
         {
-            get { return top; }
+            get { return (ball != null) ? ball.Y : top; }
             set
             {
                 top = value;
+                if (ball != null)
+                {
+                    ball.Y = value;
+                }
                 OnPropertyChanged("Top");
             }
         }
@@ -41,10 +59,14 @@ namespace BreakOut.ViewModel
         private double width;
         public double Width
         {
-            get { return width; }
+            get { return (ball != null) ? ball.Width : width; }
             set
             {
                 width = value;
+                if (ball != null)
+                {
+                    ball.Width = value;
+                }
                 OnPropertyChanged("Width");
             }
         }
@@ -53,10 +75,14 @@ namespace BreakOut.ViewModel
         private double height;
         public double Height
         {
-            get { return height; }
+            get { return (ball != null) ? ball.Height : height; }
             set
             {
                 height = value;
+                if (ball != null)
+                {
+                    ball.Height = value;
+                }
                 OnPropertyChanged("Height");
             }
         }

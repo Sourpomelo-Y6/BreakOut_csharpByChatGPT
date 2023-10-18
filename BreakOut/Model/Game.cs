@@ -44,11 +44,11 @@ namespace BreakOut.Model
             //GameOver += OnGameOver;
         }
 
-        public void Start()
+        public bool Start()
         {
             if (isStarted)
             {
-                return;
+                return false;
             }
 
             isStarted = true;
@@ -57,9 +57,7 @@ namespace BreakOut.Model
             Ball.Reset();
             Score = 0;
 
-            Timer timer = new Timer(16);
-            timer.Elapsed += OnTimerElapsed;
-            timer.Start();
+            return true;
         }
 
         public void Pause()
@@ -110,7 +108,7 @@ namespace BreakOut.Model
             //PaddleMoved?.Invoke(this, new PaddleEventArgs(Paddle));
         }
 
-        private void OnTimerElapsed(object sender, ElapsedEventArgs e)
+        public void OnTimerElapsed()
         {
             if (!isStarted || isPaused)
             {

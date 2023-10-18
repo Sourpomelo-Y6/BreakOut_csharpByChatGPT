@@ -6,11 +6,18 @@
         xmlns:local="clr-namespace:BreakOut.View"
         xmlns:vm="clr-namespace:BreakOut.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="640" Width="640">
     <Window.DataContext>
         <vm:MainViewModel/>
     </Window.DataContext>
-    <Canvas>
+    <DockPanel>
+        <Menu Height="20" DockPanel.Dock="Top">
+            <MenuItem Header="_File(F)" InputGestureText="Ctrl+F" >
+                <MenuItem Header="_Start(S)" InputGestureText="Ctrl+S" Command="{Binding StartCommand}"/>
+                <Separator />
+                <MenuItem Header="_Exit(X)" InputGestureText="Ctrl+X" />
+            </MenuItem>
+        </Menu>
         <ItemsControl ItemsSource="{Binding Shapes}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -42,5 +49,5 @@
                 </Style>
             </ItemsControl.ItemContainerStyle>
         </ItemsControl>
-    </Canvas>
+    </DockPanel>
 </Window>
