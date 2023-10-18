@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BreakOut.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,11 +23,18 @@ namespace BreakOut.View
         public MainWindow()
         {
             InitializeComponent();
+
+            DataContext = new MainViewModel();
         }
 
-        private void Window_Closed(object sender, EventArgs e)
+        private async void Window_Closed(object sender, EventArgs e)
         {
-            
+            ((MainViewModel)DataContext).Endflag = true;
+
+            while (!((MainViewModel)DataContext).Completeflag)
+            {
+                await Task.Delay(1);
+            }
         }
     }
 }

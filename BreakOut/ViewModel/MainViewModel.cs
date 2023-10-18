@@ -24,7 +24,7 @@ namespace BreakOut.ViewModel
             Shapes = new ObservableCollection<object>();
             //test();
             //game.Start();
-
+            Completeflag = false;
         }
 
         private void test()
@@ -101,6 +101,9 @@ namespace BreakOut.ViewModel
             }
         }
 
+        public bool Endflag { get; internal set; }
+        public bool Completeflag { get; internal set; }
+
         private void RightKey()
         {
             game.MovePaddleRight();
@@ -113,25 +116,22 @@ namespace BreakOut.ViewModel
             game.OnTimerElapsed();
             //OnPropertyChanged("Shapes");
 
-            if (!game.IsOvered())
+            if (!game.IsOvered() && !Endflag)
             {
+                
                 App.Current.Dispatcher.Invoke(() =>
                 {
-                    try
+                    Shapes.Clear();
+                    Shapes.Add(new BallViewModel(game.Ball));
+                    for (int i = 0; i < game.Blocks.Length; i++)
                     {
-                        Shapes.Clear();
-                        Shapes.Add(new BallViewModel(game.Ball));
-                        for (int i = 0; i < game.Blocks.Length; i++)
-                        {
-                            Shapes.Add(new BlockViewModel(game.Blocks[i]));
-                        }
-                        Shapes.Add(new PaddleViewModel(game.Paddle));
+                        Shapes.Add(new BlockViewModel(game.Blocks[i]));
                     }
-                    catch
-                    {
+                    Shapes.Add(new PaddleViewModel(game.Paddle));
 
-                    }
+                    Completeflag = true;
                 });
+                
             }
 
         }

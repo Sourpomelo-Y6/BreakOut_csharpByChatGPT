@@ -80,7 +80,6 @@ namespace BreakOut.Model
             isStarted = false;
             isPaused = false;
             isOvered = false;
-
             Ball.Reset();
             Score = 0;
 

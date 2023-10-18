@@ -59,7 +59,7 @@ namespace BreakOut.ViewModel
         private double left;
         public double Left
         {
-            get { return (block != null) ? block.X : left; }
+            get { return (block != null) ? block.X - Width / 2 : left; }
             set
             {
                 left = value;
@@ -74,7 +74,7 @@ namespace BreakOut.ViewModel
         private double top;
         public double Top
         {
-            get { return (block != null) ? block.Y : top; }
+            get { return (block != null) ? block.Y - Height / 2 : top; }
             set
             {
                 top = value;

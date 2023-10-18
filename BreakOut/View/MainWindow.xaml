@@ -6,10 +6,10 @@
         xmlns:local="clr-namespace:BreakOut.View"
         xmlns:vm="clr-namespace:BreakOut.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="670" Width="640"  Closed="Window_Closed">
-    <Window.DataContext>
+        Title="MainWindow" Height="670" Width="650" Background="SkyBlue" Closed="Window_Closed">
+    <!--<Window.DataContext>
         <vm:MainViewModel/>
-    </Window.DataContext>
+    </Window.DataContext>-->
     <Window.InputBindings>
         <KeyBinding Gesture="Left" Command="{Binding LeftCommand}"/>
         <KeyBinding Gesture="Right" Command="{Binding RightCommand}"/>
@@ -25,7 +25,7 @@
         <ItemsControl ItemsSource="{Binding Shapes}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <Canvas>
+                    <Canvas Background="White">
 
                     </Canvas>
                 </ItemsPanelTemplate>

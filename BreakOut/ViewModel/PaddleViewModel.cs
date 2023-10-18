@@ -27,7 +27,7 @@ namespace BreakOut.ViewModel
         private double left;
         public double Left
         {
-            get { return (paddle != null) ? paddle.X : left; }
+            get { return (paddle != null) ? paddle.X - Width / 2 : left; }
             set
             {
                 left = value;
@@ -42,7 +42,7 @@ namespace BreakOut.ViewModel
         private double top;
         public double Top
         {
-            get { return (paddle != null) ? paddle.Y : top; }
+            get { return (paddle != null) ? paddle.Y - Height / 2 : top; }
             set
             {
                 top = value;

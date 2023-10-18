@@ -29,7 +29,7 @@ namespace BreakOut.ViewModel
         private double left;
         public double Left
         {
-            get { return (ball != null) ? ball.X : left; }
+            get { return (ball != null) ? ball.X - Width / 2 : left; }
             set
             {
                 left = value;
@@ -44,7 +44,7 @@ namespace BreakOut.ViewModel
         private double top;
         public double Top
         {
-            get { return (ball != null) ? ball.Y : top; }
+            get { return (ball != null) ? ball.Y - Height / 2 : top; }
             set
             {
                 top = value;

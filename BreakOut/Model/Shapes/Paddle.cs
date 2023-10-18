@@ -27,9 +27,9 @@
         {
             X += speed;
 
-            if (X + Width / 2 > 500)
+            if (X + Width / 2 > 640)
             {
-                X = 500 - Width / 2;
+                X = 640 - Width / 2;
             }
         }
     }
