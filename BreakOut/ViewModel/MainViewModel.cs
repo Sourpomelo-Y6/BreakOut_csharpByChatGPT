@@ -53,7 +53,7 @@ namespace BreakOut.ViewModel
         {
             if (game.Start())
             {
-                Timer timer = new Timer(16);
+                Timer timer = new Timer(100);
                 timer.Elapsed += OnTimerElapsed;
                 timer.Start();
 
@@ -66,27 +66,73 @@ namespace BreakOut.ViewModel
             }
         }
 
+        private RelayCommand leftCommand;
+
+        public ICommand LeftCommand
+        {
+            get
+            {
+                if (leftCommand == null)
+                {
+                    leftCommand = new RelayCommand(LeftKey);
+                }
+
+                return leftCommand;
+            }
+        }
+
+        private void LeftKey()
+        {
+            game.MovePaddleLeft();
+        }
+
+        private RelayCommand rightCommand;
+
+        public ICommand RightCommand
+        {
+            get
+            {
+                if (rightCommand == null)
+                {
+                    rightCommand = new RelayCommand(RightKey);
+                }
+
+                return rightCommand;
+            }
+        }
+
+        private void RightKey()
+        {
+            game.MovePaddleRight();
+        }
+
+
+
         private void OnTimerElapsed(object sender, ElapsedEventArgs e)
         {
             game.OnTimerElapsed();
             //OnPropertyChanged("Shapes");
-            App.Current.Dispatcher.Invoke(() =>
+
+            if (!game.IsOvered())
             {
-                try
+                App.Current.Dispatcher.Invoke(() =>
                 {
-                    Shapes.Clear();
-                    Shapes.Add(new BallViewModel(game.Ball));
-                    for (int i = 0; i < game.Blocks.Length; i++)
+                    try
                     {
-                        Shapes.Add(new BlockViewModel(game.Blocks[i]));
+                        Shapes.Clear();
+                        Shapes.Add(new BallViewModel(game.Ball));
+                        for (int i = 0; i < game.Blocks.Length; i++)
+                        {
+                            Shapes.Add(new BlockViewModel(game.Blocks[i]));
+                        }
+                        Shapes.Add(new PaddleViewModel(game.Paddle));
                     }
-                    Shapes.Add(new PaddleViewModel(game.Paddle));
-                }
-                catch 
-                { 
-                
-                }
-            });
+                    catch
+                    {
+
+                    }
+                });
+            }
 
         }
     }

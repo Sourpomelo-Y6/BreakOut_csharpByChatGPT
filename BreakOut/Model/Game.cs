@@ -17,7 +17,7 @@ namespace BreakOut.Model
         private bool isStarted = false;
 
         private bool isPaused = false;
-
+        private bool isOvered = false;
         private readonly double canvasWidth;
 
         private readonly double canvasHeight;
@@ -70,10 +70,17 @@ namespace BreakOut.Model
             isPaused = false;
         }
 
+        public bool IsOvered() 
+        {
+            return isOvered;
+        } 
+
         public void Reset()
         {
             isStarted = false;
             isPaused = false;
+            isOvered = false;
+
             Ball.Reset();
             Score = 0;
 
@@ -129,7 +136,7 @@ namespace BreakOut.Model
 
             if (Ball.Y + Ball.Radius >= canvasHeight)
             {
-                //GameOver?.Invoke(this, EventArgs.Empty);
+                OnGameOver();//?.Invoke(this, EventArgs.Empty);
                 return;
             }
 
@@ -169,7 +176,7 @@ namespace BreakOut.Model
                     Score += 10;
                     if (IsGameCleared())
                     {
-                        //GameOver?.Invoke(this, EventArgs.Empty);
+                        OnGameOver();//?.Invoke(this, EventArgs.Empty);
                         return;
                     }
                 }
@@ -318,12 +325,13 @@ namespace BreakOut.Model
         //    //BrickBroken?.Invoke(this, e);
         //}
 
-        private void OnGameOver(object sender, EventArgs e)
+        private void OnGameOver()
         {
             if (isStarted)
             {
                 isStarted = false;
                 isPaused = false;
+                isOvered = true;
                 //GameOver?.Invoke(this, e);
             }
         }

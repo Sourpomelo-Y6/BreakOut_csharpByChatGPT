@@ -6,10 +6,14 @@
         xmlns:local="clr-namespace:BreakOut.View"
         xmlns:vm="clr-namespace:BreakOut.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="640" Width="640"  Closed="Window_Closed">
+        Title="MainWindow" Height="670" Width="640"  Closed="Window_Closed">
     <Window.DataContext>
         <vm:MainViewModel/>
     </Window.DataContext>
+    <Window.InputBindings>
+        <KeyBinding Gesture="Left" Command="{Binding LeftCommand}"/>
+        <KeyBinding Gesture="Right" Command="{Binding RightCommand}"/>
+    </Window.InputBindings>
     <DockPanel>
         <Menu Height="20" DockPanel.Dock="Top">
             <MenuItem Header="_File(F)" InputGestureText="Ctrl+F" >
@@ -21,7 +25,9 @@
         <ItemsControl ItemsSource="{Binding Shapes}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <Canvas/>
+                    <Canvas>
+
+                    </Canvas>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>

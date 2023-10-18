@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace BreakOut.ViewModel
 {
@@ -23,6 +24,36 @@ namespace BreakOut.ViewModel
         public BlockViewModel(Block block)
         {
             this.block = block;
+        }
+
+        private Brush strokeColor;
+        public Brush StrokeColor
+        {
+            get { return (block != null && !block.IsBroken) ? Brushes.Black : Brushes.Transparent; }
+            //set
+            //{
+            //    left = value;
+            //    if (block != null)
+            //    {
+            //        block.X = value;
+            //    }
+            //    OnPropertyChanged("Left");
+            //}
+        }
+
+        private Brush fillColor;
+        public Brush FillColor
+        {
+            get { return (block != null && !block.IsBroken) ? Brushes.Red : Brushes.Transparent; }
+            //set
+            //{
+            //    top = value;
+            //    if (block != null)
+            //    {
+            //        block.Y = value;
+            //    }
+            //    OnPropertyChanged("Top");
+            //}
         }
 
         private double left;

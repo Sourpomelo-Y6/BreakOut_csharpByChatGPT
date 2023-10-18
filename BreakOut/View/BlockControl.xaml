@@ -7,6 +7,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Rectangle Width="{Binding Width}" Height="{Binding Height}" Fill="Red" Stroke="Black"  StrokeThickness="2" />
+        <Rectangle Width="{Binding Width}" Height="{Binding Height}" Fill="{Binding FillColor}" Stroke="{Binding StrokeColor}"  StrokeThickness="2" />
     </Grid>
 </UserControl>
